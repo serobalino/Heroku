@@ -92,4 +92,14 @@ class TwilioController extends Controller
     {
         //
     }
+
+
+
+    public function responde(Request $request)
+    {
+        $nuevo = new Commits();
+        $nuevo->respuesta=json_encode($request->all());
+        $nuevo->save();
+        return response($request);
+    }
 }
