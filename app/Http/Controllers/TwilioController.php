@@ -19,6 +19,7 @@ class TwilioController extends Controller
         $nuevo = new Commits();
         $nuevo->respuesta=json_encode($request->all());
         $nuevo->save();
+        return response($request);
 
         //return   json_encode ($request->all());
     }
@@ -44,6 +45,7 @@ class TwilioController extends Controller
         $nuevo = new Commits();
         $nuevo->respuesta=json_encode($request->all());
         $nuevo->save();
+        return response($request);
     }
 
     /**
