@@ -105,7 +105,7 @@ class TwilioController extends Controller
         }
 
 
-        if($nuevo->estado_co=="failed"){
+        if($request->data["status"]==="failed"){
             $sid = config("services.twilio.sid");
             $token = config("services.twilio.token");
             $client = new Client($sid, $token);
