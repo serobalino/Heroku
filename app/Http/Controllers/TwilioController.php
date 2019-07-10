@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Apps;
 use App\Commits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Twilio\Rest\Client;
 
 class TwilioController extends Controller
 {
@@ -93,6 +96,31 @@ class TwilioController extends Controller
         $nuevo->log_co      =   $request->data["output_stream_url"];
         $nuevo->respuesta_co=   json_encode($request->all());
         $nuevo->save();
+
+        $ap                 =   Apps::where("nombre_app",$nuevo->app_co)->first();
+        if(!$ap){
+            $ap             =   new Apps();
+            $ap->nombre_app =   $nuevo->app_co;
+            $ap->save();
+        }
+
+
+        if($nuevo->estado_co==="failed"){
+            $sid = config("services.twilio.sid");
+            $token = config("services.twilio.token");
+            $client = new Client($sid, $token);
+
+            foreach ($ap->duenos as $item){
+                $message = $client->messages->create(
+                    'whatsapp:'.$item->dueno->celular_du,
+                    array(
+                        'from' => 'whatsapp:'.config("services.twilio.from"),
+                        'body' => "Hola, ".$item->dueno->alias_du." hay un error al compilar *".$nuevo->app_co."* revísalo por favor."
+                    )
+                );
+            }
+
+        }
         return response($request);
     }
 
@@ -100,7 +128,7 @@ class TwilioController extends Controller
 
     public function responde(Request $request)
     {
-        
+
         return response($request);
     }
 }

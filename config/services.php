@@ -44,4 +44,9 @@ return [
         ],
     ],
 
+    'twilio' => [
+        'sid' => env('SID_TWILIO'),
+        'token' => env('TOKEN_TWILIO'),
+        'from' => "+14155238886"
+    ]
 ];
