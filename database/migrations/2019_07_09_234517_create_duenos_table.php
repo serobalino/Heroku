@@ -14,7 +14,11 @@ class CreateDuenosTable extends Migration
     public function up()
     {
         Schema::create('duenos', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id_du');
+            $table->string("nombre_du");
+            $table->string("apellido_du");
+            $table->string("celular_du");
+            $table->string("alias_du");
             $table->timestamps();
         });
     }

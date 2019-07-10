@@ -14,14 +14,7 @@ class TwilioController extends Controller
      */
     public function index(Request $request)
     {
-
-
-        $nuevo = new Commits();
-        $nuevo->respuesta=json_encode($request->all());
-        $nuevo->save();
-        return response($request);
-
-        //return   json_encode ($request->all());
+        return $this->crear($request);
     }
 
     /**
@@ -42,10 +35,7 @@ class TwilioController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Commits();
-        $nuevo->respuesta=json_encode($request->all());
-        $nuevo->save();
-        return response($request);
+        return $this->crear($request);
     }
 
     /**
@@ -95,10 +85,27 @@ class TwilioController extends Controller
 
 
 
+    private function crear($request){
+        $nuevo              =   new Commits();
+        $nuevo->id_co       =   $request->id;
+        $nuevo->app_co      =   $request->data->app->name;
+        $nuevo->estado_co   =   $request->data->status;
+        $nuevo->log_co      =   $request->data->output_stream_url;
+        $nuevo->respuesta_co=   json_encode($request->all());
+        $nuevo->save();
+        return response($request);
+    }
+
+
+
     public function responde(Request $request)
     {
         $nuevo = new Commits();
-        $nuevo->respuesta=json_encode($request->all());
+        $nuevo->id_co=$request->id;
+        $nuevo->app_co=$request->data->app->name;
+        $nuevo->estado_co=$request->id;
+        $nuevo->id_co=$request->id;
+        $nuevo->respuesta_co=json_encode($request->all());
         $nuevo->save();
         return response($request);
     }

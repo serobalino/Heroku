@@ -14,8 +14,11 @@ class CreateCommitsTable extends Migration
     public function up()
     {
         Schema::create('commits', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->json('respuesta');
+            $table->char('id_co', 37)->primary();
+            $table->string("app_co");
+            $table->string("estado_co");
+            $table->string("log_co");
+            $table->json('respuesta_co');
             $table->timestamps();
         });
     }
