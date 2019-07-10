@@ -17,7 +17,7 @@ class CreateCommitsTable extends Migration
             $table->char('id_co', 37)->primary();
             $table->string("app_co");
             $table->string("estado_co");
-            $table->string("log_co");
+            $table->mediumText("log_co");
             $table->json('respuesta_co');
             $table->timestamps();
         });
