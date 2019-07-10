@@ -11,4 +11,8 @@ class Apps extends Model
     public function duenos(){
         return $this->hasMany(Pertenece::class,"id_app","id_app");
     }
+
+    public function commits(){
+        return $this->hasMany(Commits::class,"app_co","nombre_app")->latest();
+    }
 }

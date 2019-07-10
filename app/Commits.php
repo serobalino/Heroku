@@ -8,4 +8,7 @@ class Commits extends Model
 {
     protected $primaryKey       =       "id_co";
     public $incrementing        =       false;
+    protected $casts            =       [
+        "respuesta_co"=>"object"
+    ];
 }
