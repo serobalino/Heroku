@@ -115,7 +115,7 @@ class TwilioController extends Controller
                     'whatsapp:'.$item->dueno->celular_du,
                     array(
                         'from' => 'whatsapp:'.config("services.twilio.from"),
-                        'body' => "Hola, ".$item->dueno->alias_du." hay un error al compilar *".$nuevo->app_co."* revísalo por favor."
+                        'body' => "Your ".$nuevo->app_co." code is http://example.com/id"
                     )
                 );
             }
