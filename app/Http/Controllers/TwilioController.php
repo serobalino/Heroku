@@ -94,7 +94,7 @@ class TwilioController extends Controller
         $nuevo->app_co      =   $request->data["app"]["name"];
         $nuevo->estado_co   =   $request->data["status"];
         $nuevo->log_co      =   $request->data["output_stream_url"];
-        $nuevo->respuesta_co=   json_encode($request->all());
+        $nuevo->respuesta_co=   $request->all();
         $nuevo->save();
 
         $ap                 =   Apps::where("nombre_app",$nuevo->app_co)->first();
