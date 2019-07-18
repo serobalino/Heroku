@@ -10,14 +10,17 @@ class Commits extends Model
     protected $primaryKey       =       "id_co";
     public $incrementing        =       false;
     protected $casts            =       [
-        "respuesta_co"=>"object"
+        "respuesta_co" => "object"
     ];
 
     protected $appends = ['github'];
 
     public function getGithubAttribute(){
+        $campo  =   json_decode($this->attributes['respuesta_co']);
+        $url    =   explode("/",$campo->data->source_blob->url);
+        $id     =   $campo->data->source_blob->version;
         Consulta::verifyPeer(false);
-        $response = Consulta::get("https://api.github.com/repos/Inpsercom-IT/kia-personalizado/commits/af9c5483f9e4b2d9be64865fbd556f759353bcac",
+        $response = Consulta::get("https://api.github.com/repos/$url[3]/$url[4]/commits/$id",
             [
                 "Authorization"     =>  "token  ".env("GITHUB_TOKEN")
             ]
