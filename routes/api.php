@@ -21,4 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource("heroku","TwilioController");
 Route::post("twilio","TwilioController@responde");
 
-Route::get('{app}/{commit?}',"ConsultaCommit@serialziacion");
+Route::post('{app}/{commit?}',"ConsultaCommit@serialziacion");

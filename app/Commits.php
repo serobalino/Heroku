@@ -13,7 +13,11 @@ class Commits extends Model
         "respuesta_co" => "object"
     ];
 
-    protected $appends = ['github'];
+    protected $appends = ['github','hace'];
+
+    public function getHaceAttribute(){
+
+    }
 
     public function getGithubAttribute(){
         $campo  =   json_decode($this->attributes['respuesta_co']);

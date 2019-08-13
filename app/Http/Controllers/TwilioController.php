@@ -110,12 +110,14 @@ class TwilioController extends Controller
             $token = config("services.twilio.token");
             $client = new Client($sid, $token);
 
+            $url    =   route("generar",["app"=>$nuevo->app_co,"commit"=>$nuevo->id_co]);
+
             foreach ($ap->duenos as $item){
                 $message = $client->messages->create(
                     'whatsapp:'.$item->dueno->celular_du,
                     array(
                         'from' => 'whatsapp:'.config("services.twilio.from"),
-                        'body' => "Your ".$nuevo->app_co." code is http://example.com/id"
+                        'body' => "Your ".$nuevo->app_co." code is $url"
                     )
                 );
             }

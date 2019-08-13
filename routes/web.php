@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/{app}/{commit?}',"ConsultaCommit@vista");
+Route::get('/{app}/{commit?}',"ConsultaCommit@vista")->name("generar");
