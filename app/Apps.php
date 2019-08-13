@@ -13,6 +13,6 @@ class Apps extends Model
     }
 
     public function commits(){
-        return $this->hasMany(Commits::class,"app_co","nombre_app")->latest();
+        return $this->hasMany(Commits::class,"app_co","nombre_app")->latest()->limit(20);
     }
 }

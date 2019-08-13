@@ -15,7 +15,15 @@ class ConsultaCommit extends Controller
             else
                 $commits=$aplicacion->commits()->where('id_co', $commit)->get();
         }
-
         return response(@$commits,@$commits?200:500);
+    }
+
+    function vista($app,$commit=null){
+        $aplicacion = Apps::where("nombre_app",$app)->first();
+        if($aplicacion){
+            return view("aplicacion-commit",["app"=>$aplicacion,"id"=>$commit]);
+        }else{
+            return abort(404);
+        }
     }
 }
