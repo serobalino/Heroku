@@ -6,13 +6,13 @@
         <b-list-group  >
             <b-list-group-item class="flex-column align-items-start" v-for="item in lista" :key="item.id_co">
                 <div class="d-flex w-100 justify-content-between">
-                    <div class="mb-1"><img :src="item.github.committer.avatar_url" class="img-thumbnail avatar"/> {{item.github.committer.login}}</div>
+                    <div class="mb-1" v-if="!item.github.message"><img :src="item.github.committer.avatar_url" class="img-thumbnail avatar"/> {{item.github.committer.login}}</div>
                     <small :class="item.estado_co==='failed' ? 'text-danger' : ''">{{item.estado_co}}</small>
                 </div>
                 <div class="mb-1">
-                    <div class="font-italic">{{item.github.commit.message}}</div>
+                    <div class="font-italic" v-if="!item.github.message" >{{item.github.commit.message}}</div>
                     <br>
-                    <button class="btn btn-primary btn-sm" v-on:click="verGit(item)">ver en GitHub</button>
+                    <button class="btn btn-primary btn-sm" v-if="!item.github.message" v-on:click="verGit(item)">ver en GitHub</button>
                     <button class="btn btn-warning btn-sm" v-on:click="verDev(item)">ver deploy</button>
                 </div>
                 <small>{{item.created_at}}</small>
