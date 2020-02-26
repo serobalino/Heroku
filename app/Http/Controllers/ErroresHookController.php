@@ -18,7 +18,7 @@ class ErroresHookController extends Controller
         $nuevo->estado_co   =   $request->data["status"];
         $nuevo->log_co      =   $request->data["output_stream_url"];
         $nuevo->respuesta_co=   $request->all();
-        //$nuevo->save();
+        $nuevo->save();
 
         $ap                 =   Apps::where("nombre_app",$nuevo->app_co)->first();
         if(!$ap){
