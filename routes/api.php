@@ -18,7 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::resource("heroku","TwilioController");
+//Route::resource("heroku","TwilioController");
+Route::post("heroku","ErroresHookController@herokuEmail");
 Route::post("twilio","TwilioController@responde");
 
 Route::post('{app}/{commit?}',"ConsultaCommit@serialziacion");
+
+Route::resource("error","TwilioController");
