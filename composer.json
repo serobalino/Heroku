@@ -14,7 +14,8 @@
         "laravel/tinker": "^1.0",
         "mashape/unirest-php": "^3.0",
         "twilio/sdk": "^5.34",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-bcmath": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
