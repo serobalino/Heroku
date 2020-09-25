@@ -46,8 +46,12 @@ class SlackError extends Notification
             ->image($github->committer->avatar_url)
             ->to('#pila-versionamiento')
             ->content("_".$github->commit->message."_")
-            ->attachment(function ($attachment) use ($url) {
-                $attachment->title("Ver detalles", $url);
+            ->attachment(function ($attachment) use ($url,$github) {
+                $attachment->title("Ver detalle", $url)
+                    ->fields([
+                        'Aplicación' => $this->nuevo->app_co,
+                        'Culpable' => $github->committer->login,
+                    ]);
             });
     }
 
