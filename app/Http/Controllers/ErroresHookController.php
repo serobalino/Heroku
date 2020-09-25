@@ -6,6 +6,7 @@ use App\Apps;
 use App\Commits;
 use App\Duenos;
 use App\Notifications\ErrorDeploy;
+use App\Notifications\SlackError;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
@@ -31,6 +32,7 @@ class ErroresHookController extends Controller
             foreach ($ap->duenos as $item){
                 Notification::send($item->dueno,new ErrorDeploy($nuevo));
             }
+            Notification::route('slack', env('SLACK_KEY'))->notify(new SlackError($nuevo));
         }
         return response($request);
     }
