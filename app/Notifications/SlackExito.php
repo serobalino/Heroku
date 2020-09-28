@@ -50,8 +50,9 @@ class SlackExito extends Notification
                 $attachment->title("Ver detalle", $url)
                     ->fields([
                         'Aplicación' => $this->nuevo->app_co,
+                        'URL' => url("http://".$this->nuevo->app_co.".herokuapp.com"),
+                        'Deploy' => $this->nuevo->tiempo." min",
                         'Commit' => $github->commit->url,
-                        'URL' => url("http://".$this->nuevo->app_co.".herokuapp.com")
                     ]);
             });
     }

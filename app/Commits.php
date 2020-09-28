@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Unirest\Request as Consulta;
 
@@ -13,10 +14,13 @@ class Commits extends Model
         "respuesta_co" => "object"
     ];
 
-    protected $appends = ['github','hace'];
+    protected $appends = ['github','tiempo'];
 
-    public function getHaceAttribute(){
-
+    public function getTiempoAttribute(){
+        $campo  =   json_decode($this->attributes['respuesta_co']);
+        $desde  =   new Carbon($campo->data->created_at);
+        $hasta  =   new Carbon($campo->data->updated_at);
+        return $hasta->diffInMinutes($desde->subMinute());
     }
 
     public function getGithubAttribute(){
