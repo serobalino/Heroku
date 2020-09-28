@@ -42,7 +42,7 @@ class SlackError extends Notification
         $url    =   url(route("generar", ["app" => $this->nuevo->app_co, "commit" => $this->nuevo->id_co]));
         return (new SlackMessage)
             ->error()
-            ->from($github->commit->author->name.' ha generado un Error')
+            ->from($github->committer->login.' ha generado un Error')
             ->image($github->committer->avatar_url)
             ->to('#pila-versionamiento')
             ->content("_".$github->commit->message."_")
@@ -50,7 +50,7 @@ class SlackError extends Notification
                 $attachment->title("Ver detalle", $url)
                     ->fields([
                         'Aplicación' => $this->nuevo->app_co,
-                        'Culpable' => $github->committer->login,
+                        'Culpable' => $github->commit->author->name,
                         'Commit' => $github->commit->url,
                     ]);
             });
