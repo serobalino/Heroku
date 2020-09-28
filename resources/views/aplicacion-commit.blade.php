@@ -13,6 +13,12 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">{{$app->nombre_app}}</h1>
+            @if($id)
+            <hr class="my-4">
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="{{route('generar',['app'=>$app->nombre_app])}}" role="button">ver más</a>
+            </p>
+            @endif
         </div>
     </div>
     <div class="">

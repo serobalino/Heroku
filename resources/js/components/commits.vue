@@ -6,7 +6,7 @@
         <b-list-group  >
             <b-list-group-item class="flex-column align-items-start" v-for="item in lista" :key="item.id_co">
                 <div class="d-flex w-100 justify-content-between">
-                    <div class="mb-1" v-if="!item.github.message"><img :src="item.github.committer.avatar_url" class="img-thumbnail avatar"/> {{item.github.committer.login}}</div>
+                    <div class="mb-1" ><img v-if="item.github.committer" :src="item.github.committer.avatar_url" class="img-thumbnail avatar"/>{{item.github.commit.author.name}}</div>
                     <small :class="item.estado_co==='failed' ? 'text-danger' : ''">{{item.estado_co}}</small>
                 </div>
                 <div class="mb-1">
