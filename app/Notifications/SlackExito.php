@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SlackError extends Notification
+class SlackExito extends Notification
 {
     use Queueable;
 
@@ -41,8 +41,8 @@ class SlackError extends Notification
         $github =   $this->nuevo->github;
         $url    =   url(route("generar", ["app" => $this->nuevo->app_co, "commit" => $this->nuevo->id_co]));
         return (new SlackMessage)
-            ->error()
-            ->from($github->commit->author->name.' ha generado un Error')
+            ->success()
+            ->from($github->commit->author->name)
             ->image($github->committer->avatar_url)
             ->to('#pila-versionamiento')
             ->content("_".$github->commit->message."_")
@@ -50,8 +50,8 @@ class SlackError extends Notification
                 $attachment->title("Ver detalle", $url)
                     ->fields([
                         'Aplicación' => $this->nuevo->app_co,
-                        'Culpable' => $github->committer->login,
                         'Commit' => $github->commit->url,
+                        'URL' => url("http://".$this->nuevo->app_co.".herokuapp.com")
                     ]);
             });
     }
@@ -64,7 +64,10 @@ class SlackError extends Notification
      */
     public function toMail($notifiable)
     {
-       //
+        return (new MailMessage)
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**

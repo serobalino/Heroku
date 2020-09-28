@@ -7,6 +7,7 @@ use App\Commits;
 use App\Duenos;
 use App\Notifications\ErrorDeploy;
 use App\Notifications\SlackError;
+use App\Notifications\SlackExito;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
@@ -28,11 +29,16 @@ class ErroresHookController extends Controller
             $ap->save();
         }
 
-        if($request->data["status"]==="failed"){
-            foreach ($ap->duenos as $item){
-                Notification::send($item->dueno,new ErrorDeploy($nuevo));
-            }
-            Notification::route('slack', env('SLACK_KEY'))->notify(new SlackError($nuevo));
+        switch ($request->data["status"]){
+            case "failed" :
+                foreach ($ap->duenos as $item){
+                    Notification::send($item->dueno,new ErrorDeploy($nuevo));
+                }
+                Notification::route('slack', env('SLACK_KEY'))->notify(new SlackError($nuevo));
+                break;
+            case "succeeded" :
+                Notification::route('slack', env('SLACK_KEY'))->notify(new SlackExito($nuevo));
+                break;
         }
         return response($request);
     }
