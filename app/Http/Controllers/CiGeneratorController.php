@@ -12,7 +12,7 @@ class CiGeneratorController extends Controller
     {
         $validator = Validator::make($datos->all(), [
             'registros' => 'required|integer|max:5000',
-            'codPro' => 'required|between:1,24|integer',
+            'codPro' => 'between:1,24|integer',
         ]);
         if ($validator->fails()) {
             return response()->json(['val' => false, 'request' => $datos->all(), 'errores' => $validator->errors()->all()]);
@@ -23,18 +23,30 @@ class CiGeneratorController extends Controller
             $i = 0;
             $incremento = '00000000';
             while ($i < $registros) {
-                $ci = $datos->codPro < 9 ? '0' . $datos->codPro . $incremento : $datos->codPro . $incremento;
+                $ci = $this->ciGenerador($datos->codPro,$incremento);
                 if ($validador->validarCedula($ci)) {
                     $i++;
                     array_push($array, $ci);
                 }
                 $incremento = $this->incremento($incremento);
-
             }
             return response()->json(['val' => true, 'request' => $datos->all(), 'data' => $array]);
         }
     }
 
+    private function ciGenerador ($codPro,$incremento) {
+        $min = 1;
+        $max = 24;
+        if(@$codPro){
+            $cod = (int)$codPro;
+        }else{
+            $cod=rand($min,$max);
+        }
+        if($cod<10)
+            return '0'.$cod.$incremento;
+        else
+            return $cod.$incremento;
+    }
     private function incremento($numero)
     {
         $numero++;
