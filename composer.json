@@ -16,6 +16,7 @@
         "laravel/slack-notification-channel": "^2.2",
         "laravel/tinker": "^1.0",
         "mashape/unirest-php": "^3.0",
+        "tavo1987/ec-validador-cedula-ruc": "^1.0",
         "twilio/sdk": "^5.34"
     },
     "require-dev": {
