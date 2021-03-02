@@ -52,7 +52,7 @@ class SlackExito extends Notification
                         'Aplicación' => $this->nuevo->app_co,
                         'URL' => url("http://".$this->nuevo->app_co.".herokuapp.com"),
                         'Deploy' => $this->nuevo->tiempo." min",
-                        'Commit' => $github->commit->url,
+                        'Commit' => $github->html_url,
                     ]);
             });
     }

@@ -51,7 +51,7 @@ class SlackError extends Notification
                     ->fields([
                         'Aplicación' => $this->nuevo->app_co,
                         'Culpable' => $github->commit->author->name,
-                        'Commit' => $github->commit->url,
+                        'Commit' => $github->html_url,
                     ])
                     ->action('Ver detalle de error', url($url));
             });
