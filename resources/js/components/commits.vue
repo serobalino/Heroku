@@ -4,10 +4,10 @@
     </div>
     <div v-else>
         <b-list-group  >
-            <b-list-group-item class="flex-column align-items-start" v-for="item in lista" :key="item.id_co">
+            <b-list-group-item class="flex-column align-items-start" v-for="item in lista" :key="item.id_co" :class="{'list-group-item-success':item.estado_co==='succeeded','list-group-item-danger':item.estado_co==='failed'}">
                 <div class="d-flex w-100 justify-content-between">
                     <div class="mb-1" ><img v-if="item.github.committer" :src="item.github.committer.avatar_url" class="img-thumbnail avatar"/>{{item.github.commit.author.name}}</div>
-                    <small :class="item.estado_co==='failed' ? 'text-danger' : ''">{{item.estado_co}}</small>
+                    <small>{{item.estado_co}}</small>
                 </div>
                 <div class="mb-1">
                     <div class="font-italic" v-if="!item.github.message" >{{item.github.commit.message}}</div>
@@ -19,12 +19,11 @@
             </b-list-group-item>
         </b-list-group>
         <b-modal id="modal-xl" size="xl" title="Deploy">
-<!--            <div class="text-center" v-if="descarga">-->
-<!--                <b-spinner variant="primary" type="grow" label="Cargando" ></b-spinner>-->
-<!--            </div>-->
-<!--            <pre v-else>{{log}}</pre>-->
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" :src="uri"></iframe>
+            <div class="text-center" v-show="cargando">
+                <b-spinner variant="primary" type="grow" label="Cargando" ></b-spinner>
+            </div>
+            <div class="embed-responsive embed-responsive-16by9" v-show="!cargando">
+                <iframe class="embed-responsive-item" :src="uri" :onload="cargando=false"></iframe>
             </div>
         </b-modal>
     </div>
