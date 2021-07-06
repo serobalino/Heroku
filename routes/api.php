@@ -20,9 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Route::resource("heroku","TwilioController");
 Route::post("heroku","ErroresHookController@herokuEmail");
+Route::post("github","ErroresHookController@githubAction");
 Route::post("twilio","TwilioController@responde");
 Route::get("ciGenerator","CiGeneratorController@lista");
 
 Route::post('{app}/{commit?}',"ConsultaCommit@serialziacion");
+Route::get('downloadArtifact/{url}',"ConsultaCommit@descargaGH")->name('downloadGH');
 
 Route::resource("error","TwilioController");

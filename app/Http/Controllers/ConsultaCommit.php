@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Apps;
 use App\Commits;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Unirest\Request as Consulta;
 
 class ConsultaCommit extends Controller
 {
@@ -24,6 +27,26 @@ class ConsultaCommit extends Controller
         if($aplicacion){
             $last = Commits::where("app_co",$app)->orderBy('created_at', 'desc')->first();
             return view("aplicacion-commit",["app"=>$aplicacion,"id"=>$commit,"last"=>$last]);
+        }else{
+            return abort(404);
+        }
+    }
+
+    function descargaGH($url=null){
+        if($url){
+            try {
+                $decrypted = Crypt::decryptString($url);
+            } catch (DecryptException $e) {
+                $decrypted = null;
+            }
+            $response = Consulta::get($decrypted,
+                [
+                    "Authorization"     =>  "token  ".env("GITHUB_TOKEN")
+                ]
+            );
+            return response()->stream(function () use ($response)  {
+                $response->body;
+                }, 200, $response->headers);
         }else{
             return abort(404);
         }

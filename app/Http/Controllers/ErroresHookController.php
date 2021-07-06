@@ -7,7 +7,9 @@ use App\Commits;
 use App\Duenos;
 use App\Notifications\ErrorDeploy;
 use App\Notifications\SlackError;
+use App\Notifications\SlackErrorGh;
 use App\Notifications\SlackExito;
+use App\Notifications\SlackExitoGh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
@@ -41,5 +43,34 @@ class ErroresHookController extends Controller
                 break;
         }
         return response($request);
+    }
+
+    public function githubAction(Request $request){
+        if($request->github['event']['repository']['name'] && $request->needs['name']['outputs']['name']){
+            $branch = $request->needs['name']['outputs']['name'];
+            $app = $request->github['event']['repository']['name']."-".$request->needs['name']['outputs']['name'];
+            $repo = $request->github['repository'];
+            $id = $request->github['run_id'];
+            $nuevo              =   new Commits();
+            $nuevo->id_co       =   $request->github['token'];
+            $nuevo->app_co      =   $app;
+            $nuevo->estado_co   =   $request->steps['build']['conclusion'];
+            $nuevo->log_co      =   "https://github.com/$repo/actions/runs/$id";
+            $nuevo->ghaction_co =   true;
+            $nuevo->respuesta_co=   $request->github;
+            $nuevo->save();
+
+            switch ($request->steps['build']['conclusion']){
+                case "failure" :
+                    Notification::route('slack', env('SLACK_KEY'))->notify(new SlackErrorGh($nuevo,$branch));
+                    break;
+                case "success" :
+                    Notification::route('slack', env('SLACK_KEY'))->notify(new SlackExitoGh($nuevo,$branch));
+                    break;
+            }
+            return response($request);
+        }else{
+            return abort(401);
+        }
     }
 }

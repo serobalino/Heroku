@@ -26,7 +26,7 @@ class AddEmailToDuenosTable extends Migration
     public function down()
     {
         Schema::table('duenos', function (Blueprint $table) {
-            $table->string('email_du');
+            $table->dropColumn('email_du');
         });
     }
 }
