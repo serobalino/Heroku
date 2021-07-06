@@ -46,6 +46,7 @@ class ErroresHookController extends Controller
     }
 
     public function githubAction(Request $request){
+        set_time_limit(60);
         if($request->github['event']['repository']['name'] && $request->needs['name']['outputs']['name']){
             $branch = $request->needs['name']['outputs']['name'];
             $app = $request->github['event']['repository']['name']."-".$request->needs['name']['outputs']['name'];
