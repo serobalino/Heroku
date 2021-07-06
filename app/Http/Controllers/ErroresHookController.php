@@ -68,7 +68,7 @@ class ErroresHookController extends Controller
                     Notification::route('slack', env('SLACK_KEY'))->notify(new SlackExitoGh($nuevo,$branch));
                     break;
             }
-            return response($request);
+            return response(true);
         }else{
             return abort(401);
         }
