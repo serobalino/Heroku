@@ -71,7 +71,8 @@ class Commits extends Model
             );
             foreach ($response->body->artifacts as $item){
                 $item->download = route('downloadGH',Crypt::encryptString($item->archive_download_url));
-                $item->size_in_mbytes = $item->size_in_bytes/1024/1024;
+                $item->size_in_mbytes = bcdiv($item->size_in_bytes/1024/1024,1,1);
+                $item->sha4 = env("GITHUB_TOKEN");
             }
             return $response->body;
         }

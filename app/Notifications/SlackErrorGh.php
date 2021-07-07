@@ -46,7 +46,8 @@ class SlackErrorGh extends Notification
             ->error()
             ->from(@$github->committer->login.' ha generado un Error')
             ->image(@$github->committer->avatar_url ? $github->committer->avatar_url : ":boom:")
-            ->to('#pila-versionamiento')
+            ->to('#ips-236-alcance-portal-pagos-web')
+//            ->to('#pila-versionamiento')
             ->content("<!here> _".$github->commit->message."_")
             ->attachment(function ($attachment) use ($url,$branch,$github,$action) {
                 $attachment

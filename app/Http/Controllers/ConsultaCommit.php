@@ -33,7 +33,6 @@ class ConsultaCommit extends Controller
     }
 
     function descargaGH($url=null){
-        set_time_limit(60);
         if($url){
             try {
                 $decrypted = Crypt::decryptString($url);

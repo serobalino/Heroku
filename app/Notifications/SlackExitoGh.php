@@ -40,17 +40,16 @@ class SlackExitoGh extends Notification
     {
         $github =   $this->nuevo->github;
         $action =   $this->nuevo->respuesta_co;
-        $url    =   $this->nuevo->log_co;
         $branch =   $this->branch;
-        $artefactos =   $this->nuevo->artefactos;
-
+        $url    =   url(route("generar", ["app" => $this->nuevo->app_co, "commit" => $this->nuevo->id_co]));
         return (new SlackMessage)
             ->success()
             ->from($github->commit->author->name)
             ->image(@$github->committer->avatar_url)
-            ->to('#pila-versionamiento')
+            ->to('#ips-236-alcance-portal-pagos-web')
+//            ->to('#pila-versionamiento')
             ->content("_".$github->commit->message."_")
-            ->attachment(function ($attachment) use ($url,$branch,$github,$action,$artefactos) {
+            ->attachment(function ($attachment) use ($url,$branch,$github,$action) {
                 $attachment->title("Ver detalle", $url)
                     ->fields([
                         'Aplicación' => $action->event->repository->name,
@@ -58,7 +57,7 @@ class SlackExitoGh extends Notification
                         'Commit' => $github->html_url,
                         'Versión' => @Commits::where('app_co',$this->nuevo->app_co)->where('estado_co',$this->nuevo->estado_co)->count(),
                     ])
-                    ->action('DESCARGAR DIST', url($artefactos->artifacts[0]->download),'primary');
+                    ->action('DESCARGAR DIST', $url,'primary');
             });
     }
 
