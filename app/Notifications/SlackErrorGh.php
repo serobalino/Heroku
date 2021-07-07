@@ -13,18 +13,16 @@ class SlackErrorGh extends Notification
 
     protected $nuevo;
     protected $branch;
-    protected $archivo;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Commits $nuevo,$branch,$archivo)
+    public function __construct(Commits $nuevo,$branch)
     {
         $this->nuevo=$nuevo;
         $this->branch=$branch;
-        $this->archivo=$archivo;
     }
 
     /**
@@ -58,7 +56,6 @@ class SlackErrorGh extends Notification
                         'Rama' => $branch,
                         'Culpable' => $github->commit->author->name,
                         'Commit' => $github->html_url,
-                        'Log' => $this->archivo,
                     ])
                     ->action('Ver detalle de error', url($url),'danger');
             });
