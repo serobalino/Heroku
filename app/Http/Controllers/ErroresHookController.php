@@ -67,11 +67,9 @@ class ErroresHookController extends Controller
                 $ap->save();
             }
 
-            $document = $request->file('log');
-
             switch ($request->steps['production']['outcome']){
                 case "failure" :
-                    Notification::route('slack', env('SLACK_KEY'))->notify(new SlackErrorGh($nuevo,$branch,$document));
+                    Notification::route('slack', env('SLACK_KEY'))->notify(new SlackErrorGh($nuevo,$branch));
                     break;
                 case "success" :
                     Notification::route('slack', env('SLACK_KEY'))->notify(new SlackExitoGh($nuevo,$branch));
