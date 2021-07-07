@@ -54,13 +54,13 @@ class ErroresHookController extends Controller
             $nuevo              =   new Commits();
             $nuevo->id_co       =   $request->github['token'];
             $nuevo->app_co      =   $app;
-            $nuevo->estado_co   =   $request->steps['build']['conclusion'];
+            $nuevo->estado_co   =   $request->steps['production']['outcome'];
             $nuevo->log_co      =   "https://github.com/$repo/actions/runs/$id";
             $nuevo->ghaction_co =   true;
             $nuevo->respuesta_co=   $request->github;
             $nuevo->save();
 
-            switch ($request->steps['build']['conclusion']){
+            switch ($request->steps['production']['outcome']){
                 case "failure" :
                     Notification::route('slack', env('SLACK_KEY'))->notify(new SlackErrorGh($nuevo,$branch));
                     break;
