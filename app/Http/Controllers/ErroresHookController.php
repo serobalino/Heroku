@@ -60,6 +60,12 @@ class ErroresHookController extends Controller
             $nuevo->respuesta_co=   $request->github;
             $nuevo->save();
 
+            $appn = Apps::where('nombre_app',$app)->first();
+            if(!$appn){
+                $appn->nombre_app = $app;
+                $appn->save();
+            }
+
             switch ($request->steps['production']['outcome']){
                 case "failure" :
                     Notification::route('slack', env('SLACK_KEY'))->notify(new SlackErrorGh($nuevo,$branch));
