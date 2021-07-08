@@ -46,7 +46,8 @@ class SlackExitoGh extends Notification
             ->success()
             ->from($github->commit->author->name)
             ->image(@$github->committer->avatar_url)
-            ->to('#pila-versionamiento')
+            ->to('#ips-236-alcance-portal-pagos-web')
+//            ->to('#pila-versionamiento')
             ->content("_".$github->commit->message."_")
             ->attachment(function ($attachment) use ($url,$branch,$github,$action) {
                 $attachment->title("Ver detalle", $url)
