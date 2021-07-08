@@ -56,7 +56,7 @@ class SlackExitoGh extends Notification
                         'Commit' => $github->html_url,
                         'Versión' => @Commits::where('app_co',$this->nuevo->app_co)->where('estado_co',$this->nuevo->estado_co)->count(),
                     ])
-                    ->action('DESCARGAR DIST', $url,'primary');
+                    ->action('DESCARGAR', $url,'primary');
             });
     }
 
