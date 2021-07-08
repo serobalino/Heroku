@@ -69,7 +69,7 @@ class ErroresHookController extends Controller
 
             switch ($request->steps['production']['outcome']){
                 case "failure" :
-                    Notification::route('slack', env('SLACK_KEY'))->notify(new SlackErrorGh($nuevo,$branch));
+                    Notification::route('slack', env('SLACK_KEY'))->notify(new SlackErrorGh($nuevo,$branch,$request->steps['log']['outputs']['log-20']));
                     break;
                 case "success" :
                     Notification::route('slack', env('SLACK_KEY'))->notify(new SlackExitoGh($nuevo,$branch));
