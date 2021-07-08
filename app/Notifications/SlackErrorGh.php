@@ -58,8 +58,8 @@ class SlackErrorGh extends Notification
                         'Rama' => $branch,
                         'Culpable' => $github->commit->author->name,
                         'Commit' => $github->html_url,
-                        'Log' => $this->error,
                     ])
+                    ->content($this->error)
                     ->action('Ver detalle de error', url($url),'danger');
             });
     }
