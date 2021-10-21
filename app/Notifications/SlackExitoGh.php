@@ -44,10 +44,10 @@ class SlackExitoGh extends Notification
         $url    =   url(route("generar", ["app" => $this->nuevo->app_co, "commit" => $this->nuevo->id_co]));
         return (new SlackMessage)
             ->success()
-            ->from($github->commit->author->name)
+            ->from(@$github->commit->author->name)
             ->image(@$github->committer->avatar_url)
             ->to('#pila-versionamiento')
-            ->content("_".$github->commit->message."_")
+            ->content("_".@$github->commit->message."_")
             ->attachment(function ($attachment) use ($url,$branch,$github,$action) {
                 $attachment->title("Ver detalle", $url)
                     ->fields([

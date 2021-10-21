@@ -49,13 +49,13 @@ class SlackErrorGh extends Notification
             ->from(@$github->committer->login.' ha generado un Error')
             ->image(@$github->committer->avatar_url ? $github->committer->avatar_url : ":boom:")
             ->to('#pila-versionamiento')
-            ->content("<!here> _".$github->commit->message."_")
+            ->content("<!here> _".@$github->commit->message."_")
             ->attachment(function ($attachment) use ($url,$branch,$github,$action) {
                 $attachment
                     ->fields([
                         'Aplicación' => $action->event->repository->name,
                         'Rama' => $branch,
-                        'Culpable' => $github->commit->author->name,
+                        'Culpable' => @$github->commit->author->name,
                         'Commit' => $github->html_url,
                     ])
                     ->content($this->error);
