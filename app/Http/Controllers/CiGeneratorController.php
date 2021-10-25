@@ -55,4 +55,14 @@ class CiGeneratorController extends Controller
         }
         return $numero;
     }
+
+    public function validator($nrm='') {
+        $validador = new ValidadorEc();
+        return response([
+            'isCédula' => $validador->validarCedula($nrm),
+            'isPersonaNatural' => $validador->validarRucPersonaNatural($nrm),
+            'isSociedadPrivada' => $validador->validarRucSociedadPrivada($nrm),
+            'isSociedadPublica' => $validador->validarRucSociedadPublica($nrm),
+        ]);
+    }
 }
