@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tavo\ValidadorEc;
+use Faker\Factory as Faker;
+
 
 class CiGeneratorController extends Controller
 {
     public function lista(Request $datos)
     {
+        $faker = Faker::create();
         $validator = Validator::make($datos->all(), [
             'registros' => 'required|integer|max:5000',
             'codPro' => 'between:1,24|integer',
@@ -23,10 +26,24 @@ class CiGeneratorController extends Controller
             $i = 0;
             $incremento = '00000000';
             while ($i < $registros) {
-                $ci = $this->ciGenerador($datos->codPro,$incremento);
+                $ci = $this->ciGenerador($datos->codPro, $incremento);
                 if ($validador->validarCedula($ci)) {
                     $i++;
-                    array_push($array, $ci);
+                    array_push($array, [
+                        'dni' => $ci,
+                        'name' => $faker->firstName,
+                        'lastname' => $faker->lastName,
+                        'title' => $faker->title,
+                        'email' => $faker->email,
+                        'address' => $faker->address,
+                        'postcode' => $faker->postcode,
+                        'city' => $faker->city,
+                        'state' => $faker->state,
+                        'phone' => $faker->phoneNumber,
+                        'job' => $faker->jobTitle,
+                        'company' => $faker->company,
+                        'password' => $faker->password,
+                    ]);
                 }
                 $incremento = $this->incremento($incremento);
             }
@@ -34,19 +51,21 @@ class CiGeneratorController extends Controller
         }
     }
 
-    private function ciGenerador ($codPro,$incremento) {
+    private function ciGenerador($codPro, $incremento)
+    {
         $min = 1;
         $max = 24;
-        if(@$codPro){
+        if (@$codPro) {
             $cod = (int)$codPro;
-        }else{
-            $cod=rand($min,$max);
+        } else {
+            $cod = rand($min, $max);
         }
-        if($cod<10)
-            return '0'.$cod.$incremento;
+        if ($cod < 10)
+            return '0' . $cod . $incremento;
         else
-            return $cod.$incremento;
+            return $cod . $incremento;
     }
+
     private function incremento($numero)
     {
         $numero++;
@@ -56,7 +75,8 @@ class CiGeneratorController extends Controller
         return $numero;
     }
 
-    public function validator($nrm='') {
+    public function validator($nrm = '')
+    {
         $validador = new ValidadorEc();
         return response([
             'isCédula' => $validador->validarCedula($nrm),
