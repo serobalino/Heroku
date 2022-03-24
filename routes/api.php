@@ -24,6 +24,8 @@ Route::post("github","ErroresHookController@githubAction");
 Route::post("twilio","TwilioController@responde");
 Route::get("ciGenerator","CiGeneratorController@lista");
 Route::get("validador/{ci}","CiGeneratorController@validator");
+Route::get("log/{device}","LogAppController@consultar");
+Route::post("log","LogAppController@guardar");
 
 Route::post('{app}/{commit?}',"ConsultaCommit@serialziacion");
 Route::get('downloadArtifact/{url}',"ConsultaCommit@descargaGH")->name('downloadGH');
