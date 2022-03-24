@@ -11,4 +11,10 @@ class Registro extends Model
 
     const CREATED_AT = 'creado_a';
     const UPDATED_AT = null;
+
+    protected $casts            =       [
+        "trama" => "object",
+        "respuesta" => "object",
+        "cabecera" => "object",
+    ];
 }

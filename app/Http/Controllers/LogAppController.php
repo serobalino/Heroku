@@ -16,9 +16,9 @@ class LogAppController extends Controller
         $nuevo->origen = $request->origen;
         $nuevo->uri = $request->uri;
         $nuevo->codigo = $request->codigo;
-        $nuevo->trama = $request->trama;
-        $nuevo->respuesta = $request->respuesta;
-        $nuevo->cabecera = $request->cabecera;
+        $nuevo->trama = @($request->trama);
+        $nuevo->respuesta = @($request->respuesta);
+        $nuevo->cabecera = @($request->cabecera);
         $nuevo->save();
         return response()->json($nuevo);
     }
